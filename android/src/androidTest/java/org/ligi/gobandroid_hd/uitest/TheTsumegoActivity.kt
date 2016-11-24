@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
 import org.ligi.gobandroid_hd.base.AssetReader.readGame
-import org.ligi.gobandroid_hd.base.GoViewActions.placeStone
+import org.ligi.gobandroid_hd.base.placeStone
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity
