@@ -22,7 +22,7 @@ import java.util.*
 class TsumegoActivity : GoActivity() {
 
     private var finishing_move: GoMove? = null
-    private var myTsumegoExtrasFragment: TsumegoGameExtrasFragment? = null
+    //private var myTsumegoExtrasFragment: TsumegoGameExtrasFragment? = null
     private var on_path_moves: MutableList<GoMove>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,17 +31,9 @@ class TsumegoActivity : GoActivity() {
         this.setTitle(R.string.tsumego)
     }
 
-    private val finishingMove: GoMove?
-        get() {
-            if (finishing_move == null) {
-                finishing_move = getCorrectMove(game.findFirstMove())
-            }
+    private val finishingMove by lazy { getCorrectMove(game.findFirstMove()) }
 
-            return finishing_move
-        }
-
-    private val isFinishingMoveKnown: Boolean
-        get() = finishingMove != null
+    private fun isFinishingMoveKnown() = finishingMove != null
 
     private fun recursive_add_on_path_moves(act: GoMove) {
         if (on_path_moves == null) {
@@ -100,7 +92,7 @@ class TsumegoActivity : GoActivity() {
         }
 
         this.menuInflater.inflate(R.menu.ingame_tsumego, menu)
-        menu.findItem(R.id.menu_game_hint).isVisible = isFinishingMoveKnown && isOnPath
+        menu.findItem(R.id.menu_game_hint).isVisible = isFinishingMoveKnown() && isOnPath
         menu.findItem(R.id.menu_game_undo).isVisible = !game.actMove.isFirstMove
         return super.onCreateOptionsMenu(menu)
     }
@@ -158,7 +150,7 @@ class TsumegoActivity : GoActivity() {
         recursive_add_on_path_moves(game.findFirstMove())
 
         // try to find the correct solution
-        if (!isFinishingMoveKnown) {
+        if (!isFinishingMoveKnown()) {
             AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution)
                     .setNegativeButton(R.string.ok, null)
                     .setPositiveButton(R.string.go_back, { dialogInterface: DialogInterface, i: Int ->
@@ -189,10 +181,9 @@ class TsumegoActivity : GoActivity() {
         }
         last_move = game.actMove
 
-        if (myTsumegoExtrasFragment != null) {
-            myTsumegoExtrasFragment!!.setOffPathVisibility(!isOnPath)
-            myTsumegoExtrasFragment!!.setCorrectVisibility(isCorrectMove(game.actMove))
-        }
+        (gameExtraFragment as TsumegoGameExtrasFragment).setOffPathVisibility(!isOnPath)
+        (gameExtraFragment as TsumegoGameExtrasFragment).setCorrectVisibility(isCorrectMove(game.actMove))
+
         if (isCorrectMove(game.actMove)) {
             val meta = SGFMetaData(game.metaData.fileName)
             meta.isSolved = true
