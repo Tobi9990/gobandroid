@@ -144,12 +144,11 @@ dependencies {
 
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.github.ligi:trulesk:0.4'
+
     androidTestCompile "com.android.support:support-annotations:$support_version"
     androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
 
-    androidTestCompile 'com.jraska:falcon-spoon-compat:1.0.3'
-    
     testCompile 'com.squareup.assertj:assertj-android:1.1.1'
     testCompile "com.android.support:support-annotations:$support_version"
     testCompile 'junit:junit:4.12'
