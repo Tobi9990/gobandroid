@@ -13,7 +13,6 @@ import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.ligi.axt.AXT
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
@@ -28,9 +27,8 @@ class TheSGFFilesystemListActivity {
     val path by lazy { File(InstrumentationRegistry.getTargetContext().cacheDir, "sgf_list_test") }
 
     @After
-    fun cleanUp() {
-        AXT.at(path).deleteRecursive()
-    }
+    fun cleanUp() = path.deleteRecursively()
+
 
     @Test
     fun testThatErrorAppearsIfPathEmpty() {
