@@ -27,8 +27,9 @@ class TheSGFFilesystemListActivity {
     val path by lazy { File(InstrumentationRegistry.getTargetContext().cacheDir, "sgf_list_test") }
 
     @After
-    fun cleanUp() = path.deleteRecursively()
-
+    fun cleanUp() {
+        path.deleteRecursively()
+    }
 
     @Test
     fun testThatErrorAppearsIfPathEmpty() {
